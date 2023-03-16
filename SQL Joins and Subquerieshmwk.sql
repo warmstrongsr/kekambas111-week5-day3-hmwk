@@ -40,6 +40,13 @@ ORDER BY amount
 --Rafael     |Abney       |  7.99|
 --Diana      |Alexander   |  7.99|
 --Gordon     |Allard      |  7.99|
+
+SELECT c.first_name, c.last_name, p.amount
+FROM payment p
+JOIN customer c
+ON c.customer_id = p.customer_id
+WHERE amount > 7
+;
 3. Show all customer names who have made over $175 in payments (use
 subqueries)
 
@@ -73,7 +80,22 @@ JOIN country
 ON city.country_id = country.country_id
 WHERE country.country = 'Argentina'
 ;
-
+--Jose subquery answer
+SELECT *
+FROM customer 
+WHERE address_id IN (
+	SELECT address_id 
+	FROM address
+	WHERE city_id IN (
+		SELECT city_id 
+		FROM city 
+		WHERE country_id = (
+			SELECT country_id
+			FROM country 
+			WHERE country = 'Argentina'
+		)
+	)
+);
 first_name|last_name|a                                                                                                |district    |city                |country  |
 ----------+---------+-------------------------------------------------------------------------------------------------+------------+--------------------+---------+
 --Willie    |Markham  |(364,1623 Kingstown Drive,,Buenos Aires,20,91299,296394569728,'2006-02-15 09:45:30')             |Buenos Aires|Almirante Brown     |Argentina|
@@ -135,7 +157,7 @@ FROM actor
 LEFT JOIN film_actor 
 ON actor.actor_id = film_actor.actor_id
 GROUP BY actor.actor_id
-ORDER BY num_movies ASC
+ORDER BY num_movies 
 LIMIT 1;
 
 actor_id|first_name|last_name|num_movies|
@@ -156,6 +178,17 @@ LIMIT 3;
 --        44|India        |        60|
 --        23|China        |        53|
 --       103|United States|        35|
+
+-- Brian subquery example
+SELECT *
+FROM country 
+WHERE country_id = (
+	SELECT country_id 
+	FROM ciry
+	GROUP BY country_id 
+	ORDER bu count(*) DESC 
+	LIMIT 3
+);
        
 9. List the actors who have been in between 20 and 25 films.
 
@@ -169,6 +202,15 @@ GROUP BY a.actor_id, a.first_name, a.last_name
 HAVING count(*) BETWEEN 20 AND 25 
 ORDER BY actor_id  ASC 
 ;
+
+--Brian answer
+
+SELECT fa.actor_id, a.first_name, a.last_name, COUNT(*) AS num_films
+FROM film_actor fa
+JOIN actor a 
+ON fa.actor_id = a.actor_id 
+GROUP BY fa.actor_id, a.first_name, a.last_name
+HAVING COUNT(*) BETWEEN 20 AND 25;
 
 --actor_id|first_name |last_name  |count|
 ----------+-----------+-----------+-----+
