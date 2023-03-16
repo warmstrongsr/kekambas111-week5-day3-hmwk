@@ -123,3 +123,16 @@
 --      46|Parker     |Goldberg   |   24|
 --     163|Christopher|West       |   21|
 --...
+
+-- -- JOIN ON comes after the SELECT FROM and before the WHERE
+
+--SELECT
+--FROM
+--JOIN
+--ON 
+--WHERE 
+--GROUP BY 
+--HAVING 
+--ORDER BY 
+--LIMIT 
+--OFFSET

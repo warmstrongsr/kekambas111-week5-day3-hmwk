@@ -40,7 +40,6 @@ ORDER BY amount
 --Rafael     |Abney       |  7.99|
 --Diana      |Alexander   |  7.99|
 --Gordon     |Allard      |  7.99|
-
 3. Show all customer names who have made over $175 in payments (use
 subqueries)
 
